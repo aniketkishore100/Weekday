@@ -4,39 +4,63 @@
   padding: 2rem;
   text-align: center;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+p {
+  margin: 0;
+  font-size: medium;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.marginTop10 {
+  margin-top: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.cardSection {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 .card {
-  padding: 2em;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(221, 228, 237);
+  background-color: rgb(255, 255, 255);
+  text-align: left;
+  width: 25%;
+  margin: 10px;
+  padding: 10px 30px;
 }
 
-.read-the-docs {
-  color: #888;
+.chip {
+  display: flex;
+  justify-content: start;
+  font-size: small;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  margin-top: 15px;
+  border: 0;
+}
+
+.easyApplyBtn{
+  background-color: aquamarine;
+  color: black;
+  font-weight: 600;
+}
+
+.applyReferralBtn{
+  background-color: #2563eb;
+  color: white;
 }

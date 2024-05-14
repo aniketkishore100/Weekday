@@ -1,29 +1,61 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Card from './components/Card';
+import { isNonEmptyArray } from './helpers';
+import { getSampleJdJSON } from './data.js';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const jsonData = getSampleJdJSON();
 
+  const [cards, setCards] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+
+  // Function to fetch data for a given page
+  const fetchData = async (pageNum) => {
+    try {
+      setLoading(true);
+      // Simulating data loading from a JSON file
+      const startIndex = (pageNum - 1) * 10;
+      const endIndex = startIndex + 10;
+      const newData = jsonData.slice(startIndex, endIndex);
+      setCards(prevCards => [...prevCards, ...newData]);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(page); // Fetch initial data when component mounts
+  }, [page]); // Fetch data whenever the page state changes
+
+  const handleScroll = () => {
+    if (
+      (window.innerHeight + window.scrollY >=
+        document.body.offsetHeight)
+    ) {
+      setPage(prevPage => prevPage + 1); // Increment page number to fetch more data
+    }
+
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []); // Add scroll event listener when component mounts
+
+  console.log('cards', cards.length, page, loading)
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className='cardSection'>
+        {
+          isNonEmptyArray(cards) && cards.map(cardObj => (
+            <Card jobData={cardObj} />
+          ))
+        }
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
     </>
   );
 }
