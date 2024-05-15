@@ -8,7 +8,7 @@ function Card({ jobData }) {
       <div className='card'>
         <div style={{ flex: 1 }}>
           <div className='chip'>
-            <img src={'/hourglass.png'} style={{ width: '12px', height: '12px', marginRight: '4px' }} />
+            <img src={'public/hourglass.png'} style={{ width: '12px', height: '12px', marginRight: '4px' }} />
             <p style={{ fontSize: '12px' }}>Posted 10 days ago</p>
           </div>
           <div className='flex marginTop10'>
@@ -43,7 +43,7 @@ function Card({ jobData }) {
 
         <div>
           <a href={jobData?.jdLink} className='btn easyApplyBtn flex'>
-            <img src={'/lightening.png'} style={{ width: '16px', height: '16px', marginRight: '4px' }} />Easy Apply
+            <img src={'public/lightening.png'} style={{ width: '16px', height: '16px', marginRight: '4px' }} />Easy Apply
           </a>
           <a href={jobData?.jdLink} className='btn applyReferralBtn '>
             Unlock referral asks
