@@ -1,7 +1,5 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  /* padding: 2rem; */
+  margin: 0 ;
   text-align: center;
 }
 p {
@@ -23,19 +21,23 @@ p {
 
 .cardSection {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  /* margin-top: 10px; */
   padding-top: 100px;
 }
 
 .card {
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   border: 1px solid rgb(221, 228, 237);
   background-color: rgb(255, 255, 255);
   text-align: left;
   width: 25%;
   margin: 10px;
   padding: 10px 30px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+
 }
 
 .chip {
@@ -53,6 +55,9 @@ p {
   border-radius: 8px;
   margin-top: 15px;
   border: 0;
+  cursor: pointer;
+  font-size: 12px;
+ text-decoration: none;
 }
 
 .easyApplyBtn{
@@ -60,10 +65,17 @@ p {
   color: black;
   font-weight: 600;
 }
+.easyApplyBtn:hover {
+  background-color: rgb(86, 200, 162);
+}
 
 .applyReferralBtn{
   background-color: #2563eb;
   color: white;
+}
+
+.applyReferralBtn:hover {
+  background-color: #204ba9;
 }
 
 .inputContainer{
@@ -72,6 +84,9 @@ p {
   padding: 20px;
   z-index: 10;
   background-color: white;
+  width: 98%;
+  margin-top: -8px;
+  margin-left: -6px;
 }
 
 input {
@@ -80,4 +95,14 @@ padding: 4px;
 flex:1;
 margin: 0px 10px;
   border: solid 2px #e5e5e5;
+}
+
+.chip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 4px;
+  border: 2px solid rgb(221, 228, 237);
+  border-radius: 99px;
 }
