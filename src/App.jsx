@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Card from './components/Card';
-import { isNonEmptyArray } from './helpers';
+import { isNonEmptyArray, isNonEmptyString } from './helpers';
 import { getSampleJdJSON } from './data.js';
 
 function App() {
   const jsonData = getSampleJdJSON();
-  // const [inputFilter, setInputFilter] = useState('')
+  const [locationFilter, setLocationFilter] = useState('')
+  const [jobRoleFilter, setJobRoleFilter] = useState('')
+  const [experienceFilter, setExperienceFilter] = useState('')
+  const [remoteFilter, setRemoteFilter] = useState('')
+  const [basePayFilter, setBasePayFilter] = useState('')
+  const [companyNameFilter, setCompanyNameFilter] = useState('')
 
   const [cards, setCards] = useState([]);
   const [page, setPage] = useState(1);
@@ -27,9 +32,8 @@ function App() {
   }
 
   useEffect(() => {
-    fetchData(page); // Fetch initial data when component mounts
-  }, [page]); // Fetch data whenever the page state changes
-
+    fetchData(page);
+  }, [page, locationFilter, jobRoleFilter, experienceFilter, remoteFilter, basePayFilter, companyNameFilter]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(callbackFunc, options)
@@ -38,14 +42,52 @@ function App() {
   }, [])
 
 
-  // Function to fetch data for a given page
+  const applyFilters = (data, location, jobRole, experience, remote, minBasePay, companyName) => {
+    console.log('inside apply FIlters', jobRole, experience)
+    let filteredData = [...data];
+    if (isNonEmptyString(location)) {
+      setCards([])
+      setPage(1)
+      filteredData = filteredData.filter(job => job.location.toLowerCase().includes(location.toLowerCase()));
+    }
+    if (isNonEmptyString(jobRole)) {
+      setCards([])
+      setPage(1)
+      filteredData = filteredData.filter(job => job.jobRole.toLowerCase().includes(jobRole.toLowerCase()));
+    }
+    if (experience) {
+
+      setCards([])
+      setPage(1)
+      filteredData = filteredData.filter(job => job.minExp <= experience && job.maxExp >= experience);
+    }
+    if (isNonEmptyString(remote)) {
+      setCards([])
+      setPage(1)
+      filteredData = filteredData.filter(job => job.remote.toLowerCase().includes(remote.toLowerCase()));
+    }
+    if (minBasePay) {
+      setCards([])
+      setPage(1)
+      filteredData = filteredData.filter(job => job.minBasePay >= minBasePay);
+    }
+    if (isNonEmptyString(companyName)) {
+      setCards([])
+      setPage(1)
+      filteredData = filteredData.filter(job => job.companyName.toLowerCase().includes(companyName.toLowerCase()));
+    }
+    return filteredData;
+  };
+
   const fetchData = async (pageNum) => {
     try {
       setLoading(true);
       // Simulating data loading from a JSON file
       const startIndex = (pageNum - 1) * 10;
       const endIndex = startIndex + 10;
-      const newData = jsonData.slice(startIndex, endIndex);
+      const filteredData = applyFilters(jsonData, locationFilter, jobRoleFilter, experienceFilter, remoteFilter, basePayFilter, companyNameFilter);
+
+      const newData = filteredData.slice(startIndex, endIndex);
       setCards(prevCards => [...prevCards, ...newData]);
       setLoading(false);
     } catch (error) {
@@ -54,45 +96,35 @@ function App() {
   };
 
 
-  // const handleScroll = () => {
-  //   if (
-  //     (window.innerHeight + window.scrollY >=
-  //       document.body.offsetHeight)
-  //   ) {
-  //     setPage(prevPage => prevPage + 1); // Increment page number to fetch more data
-  //   }
-
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => window.removeEventListener('scroll', handleScroll);
-  // }, []); // Add scroll event listener when component mounts
-  // const logicFn = () =>{
-
-  // }
-
-  // function jobFilter(job, location) {
-  //   return job.location.toLowerCase().includes(location.toLowerCase())
-  // }
-  // function filterJobsByLocation(jobs, searchQuery) {
-  //   return jobs.filter(job => {
-  //     return jobFilter(job, searchQuery)
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   const filteredJobs = filterJobsByLocation(cards, inputFilter);
-  //   setCards(filteredJobs)
-  //   setPage(1);
-  // }, [inputFilter])
-
-
   return (
     <>
-      {/* <input onChange={(e) => {
-        setInputFilter(e.target.value)
-      }} /> */}
+      <div className='flex'>
+        <input
+          placeholder='Job Location' onChange={(e) => {
+            setLocationFilter(e.target.value)
+          }} />
+        <input
+          placeholder='Roles' onChange={(e) => {
+            setJobRoleFilter(e.target.value)
+          }} />
+        <input
+          placeholder='Experience' onChange={(e) => {
+            setExperienceFilter(e.target.value)
+          }} />
+        <input
+          placeholder='Remote' onChange={(e) => {
+            setRemoteFilter(e.target.value)
+          }} />
+        <input
+          placeholder='Minimum Base Pay' onChange={(e) => {
+            setBasePayFilter(e.target.value)
+          }} />
+        <input
+          placeholder='Search Company Name' onChange={(e) => {
+            setCompanyNameFilter(e.target.value)
+          }} />
+
+      </div>
       <div className='cardSection'>
         {
           isNonEmptyArray(cards) && cards.map(cardObj => (
@@ -100,7 +132,8 @@ function App() {
           ))
         }
       </div>
-      <div ref={loadingDivRef}>Loading...</div>
+
+      <div ref={loadingDivRef}>{loading && 'Loading...'}</div>
     </>
   );
 }
