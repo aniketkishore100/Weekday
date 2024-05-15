@@ -18,7 +18,7 @@ function Card({ jobData }) {
           </div>
         </div>
         <div className='marginTop10'>
-          <p>Estimiated Salary: ₹{jobData?.minJdSalary && `${jobData?.minJdSalary} - `}{jobData?.maxJdSalary}LPA</p>
+          <p>Estimiated Salary: ${jobData?.minJdSalary && `${jobData?.minJdSalary} - `}{jobData?.maxJdSalary}</p>
         </div>
         <div className='marginTop10'>
           <p>About Company</p>

@@ -43,7 +43,6 @@ function App() {
 
 
   const applyFilters = (data, location, jobRole, experience, remote, minBasePay, companyName) => {
-    console.log('inside apply FIlters', jobRole, experience)
     let filteredData = [...data];
     if (isNonEmptyString(location)) {
       setCards([])
@@ -69,7 +68,7 @@ function App() {
     if (minBasePay) {
       setCards([])
       setPage(1)
-      filteredData = filteredData.filter(job => job.minBasePay >= minBasePay);
+      filteredData = filteredData.filter(job => job.minJdSalary >= Number(minBasePay));
     }
     if (isNonEmptyString(companyName)) {
       setCards([])
@@ -98,9 +97,10 @@ function App() {
 
   return (
     <>
-      <div className='flex'>
+      <div className='flex inputContainer'>
         <input
-          placeholder='Job Location' onChange={(e) => {
+          placeholder='Job Location'
+          onChange={(e) => {
             setLocationFilter(e.target.value)
           }} />
         <input
