@@ -1,8 +1,21 @@
-# React + Vite
+# Project Name
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+A candidate application platform that allows users to view job listings, filter jobs based on various criteria, with infinite scroll for a seamless browsing experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How to Run Locally
+
+To run this project on your local environment, follow these steps:
+
+1. Clone the repository to your local computer:
+   git clone <repository_url>
+
+2. Navigate to the root folder of the project:
+   cd Weekday
+
+3. Install project dependencies:
+   npm install
+
+4. Start the development server:
+   npm run dev

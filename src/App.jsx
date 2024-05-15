@@ -6,6 +6,7 @@ import { getSampleJdJSON } from './data.js';
 
 function App() {
   const jsonData = getSampleJdJSON();
+
   const [locationFilter, setLocationFilter] = useState('')
   const [jobRoleFilter, setJobRoleFilter] = useState('')
   const [experienceFilter, setExperienceFilter] = useState('')
@@ -36,6 +37,7 @@ function App() {
   }, [page, locationFilter, jobRoleFilter, experienceFilter, remoteFilter, basePayFilter, companyNameFilter]);
 
   useEffect(() => {
+    // using IntersectionObserver to detect loading component at the end of the page and start infinite loading
     const observer = new IntersectionObserver(callbackFunc, options)
     if (loadingDivRef.current) observer.observe(loadingDivRef.current)
     return () => { if (loadingDivRef.current) observer.observe(loadingDivRef.current) }
@@ -43,6 +45,7 @@ function App() {
 
 
   const applyFilters = (data, location, jobRole, experience, remote, minBasePay, companyName) => {
+    // applying filters on the data recieved from data.js
     let filteredData = [...data];
     if (isNonEmptyString(location)) {
       setCards([])
@@ -81,7 +84,7 @@ function App() {
   const fetchData = async (pageNum) => {
     try {
       setLoading(true);
-      // Simulating data loading from a JSON file
+      // Simulating data loading from data.js
       const startIndex = (pageNum - 1) * 10;
       const endIndex = startIndex + 10;
       const filteredData = applyFilters(jsonData, locationFilter, jobRoleFilter, experienceFilter, remoteFilter, basePayFilter, companyNameFilter);
@@ -123,7 +126,6 @@ function App() {
           placeholder='Search Company Name' onChange={(e) => {
             setCompanyNameFilter(e.target.value)
           }} />
-
       </div>
       <div className='cardSection'>
         {
